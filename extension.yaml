@@ -1,0 +1,48 @@
+name: gdrive-classifier
+version: 1.0.0
+description: Google Drive document classification using LLMs
+author: jtrogers
+license: MIT
+
+type: mcp
+mcp_server:
+  command: python mcp_server.py
+  port: 0
+  environment:
+    PYTHONPATH: ${EXTENSION_DIR}
+
+dependencies:
+  - python3
+
+config:
+  schema:
+    type: object
+    properties:
+      rubric_path:
+        type: string
+        description: Path to classification rubric JSON file
+      confidence_thresholds:
+        type: object
+        properties:
+          high:
+            type: integer
+            minimum: 0
+            maximum: 100
+          medium:
+            type: integer
+            minimum: 0
+            maximum: 100
+          low:
+            type: integer
+            minimum: 0
+            maximum: 100
+      batch_size:
+        type: integer
+        minimum: 1
+        default: 100
+      cache_duration_days:
+        type: integer
+        minimum: 1
+        default: 7
+    required:
+      - rubric_path
